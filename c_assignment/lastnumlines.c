@@ -5,8 +5,7 @@ char ** lastnumlines(FILE * inputfp, unsigned int num){
 	char ** tailbuff = (char **) calloc(num, sizeof(char *));
 	char ** temp = (char **) calloc(num, sizeof(char *));
 	int i=0;
-	int j=1;
-	while(j<=num){
+	while(i<num){
 
 		if(feof(inputfp)){
 			printf("\nGiven Size is Greater than the input file\n\n");
@@ -22,7 +21,6 @@ char ** lastnumlines(FILE * inputfp, unsigned int num){
 			temp[i] = (char *) calloc(255, sizeof(char));
 			fgets(temp[i],255,inputfp);
 			i++;
-			j++;
 		}
 	}
 

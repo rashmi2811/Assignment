@@ -5,8 +5,8 @@
 char ** firstnumlines(FILE * inputfp, unsigned int num){
 	char ** headbuff = (char **) calloc(num, sizeof(char *));
 	int i=0;
-	int j=1;
-	while(j<=num){
+	
+	while(i<num){
 
 		if(feof(inputfp)){
 			printf("\nGiven Size is Greater than the input file\n\n");
@@ -21,7 +21,6 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 			headbuff[i] = (char *) calloc(255, sizeof(char));
 			fgets(headbuff[i],255,inputfp);
 			i++;
-			j++;
 		}
 	}
 	return headbuff;
