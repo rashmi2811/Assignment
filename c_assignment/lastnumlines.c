@@ -3,6 +3,10 @@
 #include <string.h>
 
 char ** lastnumlines(FILE * inputfp, unsigned int num){
+
+	if(num <= 0)
+		return NULL;
+
 	char ** tailbuff = (char **) calloc(num, sizeof(char *));
 	char ** temp = (char **) calloc(num, sizeof(char *));
 
@@ -59,8 +63,8 @@ char ** lastnumlines(FILE * inputfp, unsigned int num){
 }
 
 
-int main() {
-	FILE * inputfp = fopen("input.txt", "r");
+int main(int argc, char ** argv) {
+	FILE * inputfp = fopen(argv[1], "r");
 
 	int num;
 	scanf("%d",&num);
