@@ -2,34 +2,34 @@
 
 int main(int argc, char **argv) {
 
-	int listenfd, connfd;
-	struct sockaddr_in servaddr;
-	char buff[MAXLINE];
-	time_t ticks;
+    int listenfd, connfd;
+    struct sockaddr_in servaddr;
+    char buff[MAXLINE];
+    time_t ticks;
 
-	listenfd = Socket(AF_INET, SOCK_STREAM, 0);
-	
-	bzero(&servaddr, sizeof(servaddr));
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	servaddr.sin_port = htons(5000);
+    listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 
-	Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
+    bzero(&servaddr, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servaddr.sin_port = htons(5000);
 
-	Listen(listenfd, LISTENQ);
+    Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
 
-	for( ; ; ) {
-		connfd = Accept(listenfd, (SA *) NULL, NULL);
-		ticks = time(NULL);
-		snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-		Write(connfd, buff, strlen(buff));
-		/*int len = strlen(buff);	
-		for(int i = 0; i < len; i++){
-		Write(connfd, buff+i, 1)
-		}*/
+    Listen(listenfd, LISTENQ);
 
-		close(connfd);
-		break;
-	}
-	close(listenfd);
+    for( ; ; ) {
+        connfd = Accept(listenfd, (SA *) NULL, NULL);
+        ticks = time(NULL);
+        snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+        Write(connfd, buff, strlen(buff));
+        /*int len = strlen(buff);	
+          for(int i = 0; i < len; i++){
+          Write(connfd, buff+i, 1)
+          }*/
+
+        close(connfd);
+        break;
+    }
+    close(listenfd);
 }
