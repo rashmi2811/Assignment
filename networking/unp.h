@@ -92,3 +92,36 @@ ssize_t Read(int sockfd, void *buff, size_t count) {
         printf("[+]Read Successful\n");
     return n;
 }
+
+void str_echo(int sockfd, int n_client) {
+    char buff[MAXLINE];
+    while(1) {
+        bzero(buff, sizeof(buff));
+        Read(sockfd, buff, MAXLINE);
+        if(!strncmp("exit", buff, 4)){
+            break;
+        }
+        printf("Client %d: %s", n_client, buff);
+        Write(sockfd, buff, strlen(buff));
+    }
+    close(sockfd);
+    printf("\n[+]Client %d Disconnected from the server.\n", n_client);
+}
+
+void str_cli(FILE *fp, int sockfd) {
+    char buff[MAXLINE+1];
+    while(1) {
+        bzero(buff, sizeof(buff));
+        printf("Client: ");
+        fgets(buff, sizeof(buff), fp);
+        Write(sockfd, buff, strlen(buff));
+        if(!strncmp("exit", buff, 4))
+            break;
+        bzero(buff, sizeof(buff));
+        Read(sockfd, buff, MAXLINE);
+        printf("Server: %s", buff);
+    }
+    close(sockfd);
+    printf("\n[+]Disconnected from the server.\n");
+}
+     
